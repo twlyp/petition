@@ -1,0 +1,35 @@
+/* --royal-blue-dark: #0b2465ff;
+--gainsboro: #dfdfdfff;
+--bittersweet: #ed6a5eff;
+--myrtle-green: #377771ff;
+--steel-pink: #d138bfff; */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #103593;
+    color: #dfdfdf;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: Raleway, Helvetica, sans-serif;
+}
+
+strong {
+    font-style: bold;
+    color: #ed6a5e;
+}
+
+em {
+    font-style: italic;
+}
+
+a {
+    color: #ed6a5e;
+}

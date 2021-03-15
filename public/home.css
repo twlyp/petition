@@ -1,0 +1,125 @@
+header {
+    width: 100vw;
+    min-height: 100vh;
+    background: radial-gradient(rgba(99, 66, 66, 0.6), rgba(33, 66, 66, 0.6));
+
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 12rem 2rem;
+}
+
+#bkg-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+header strong {
+    color: #103593;
+    text-shadow: 0px 0px 4px #dfdfdf;
+}
+
+.headline {
+    text-shadow: 0px 0px 4px #333333;
+
+    display: block;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 8rem;
+    align-self: flex-end;
+    text-align: right;
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+    max-width: 80vw;
+}
+
+main {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 12rem 2rem;
+}
+
+.par-button {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 50px;
+}
+
+main p {
+    max-width: 50vw;
+    margin: 2rem 3rem;
+    font-size: 1.7rem;
+}
+
+#go-sign {
+    position: absolute;
+    font-size: 3rem;
+    border: 7px solid #ed6a5e;
+    border-radius: 45%;
+    background: linear-gradient(rgba(237, 106, 94, 0.4), rgba(37, 77, 71, 0.6));
+    width: 200px;
+    height: 300px;
+    right: 10%;
+    top: 80%;
+    transform: rotate(30deg) translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-text {
+    transform: rotate(-30deg);
+}
+
+.tail {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-top: 170px solid #ed6a5e;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    transform-origin: top center;
+    transform: skew(15deg) translateX(-50%);
+}
+
+.wiggle {
+    animation: wiggle 1s infinite ease-out;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: skew(15deg) translateX(-50%);
+    }
+    50% {
+        transform: skew(-15deg) translateX(-50%);
+    }
+    100% {
+        transform: skew(15deg) translateX(-50%);
+    }
+}
+
+#go-sign:hover {
+    background: linear-gradient(rgba(37, 77, 71, 0.6), rgba(237, 106, 94, 0.4));
+}

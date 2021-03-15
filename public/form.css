@@ -1,0 +1,129 @@
+.letter {
+    position: relative;
+    max-width: 700px;
+    background: #dfdfdf;
+    color: #333333;
+    padding: 3rem 2rem 0 2rem;
+    margin: 3rem 3rem;
+    box-shadow: #000000 10px 10px 5px 5px;
+    font-family: "Syne Mono", Courier, monospace;
+    font-size: 1.5rem;
+}
+
+.letter p {
+    font-size: 1.3rem;
+}
+
+button {
+    box-shadow: #000000 10px 10px 5px 5px;
+}
+
+input {
+    font-family: "Syne Mono", Courier, monospace;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #333333;
+    margin: 2px;
+}
+
+input:nth-of-type(1) {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+input:nth-of-type(2) {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+input:nth-of-type(3) {
+    grid-column: 2/4;
+    grid-row: 2;
+}
+
+#signature-form {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+#signature-canvas {
+    border: 1px dashed #666666;
+    border-radius: 1em;
+    margin: 2em;
+    grid-column: 1 / 4;
+    grid-row: 3;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+.error-msg {
+    display: block;
+    background: rgba(255, 0, 0, 0.7);
+    border: 2px solid red;
+    width: 100%;
+    text-align: center;
+}
+
+.paper {
+    background-color: #dfdfdf;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.3);
+}
+.paper:before, .paper:after {
+	position: absolute;
+	width: 40%;
+	height: 10px;
+	content: ' ';
+	left: 12px;
+	bottom: 12px;
+	background: transparent;
+	transform: skew(-5deg) rotate(-5deg);
+	box-shadow: 0 10px 12px rgba(0, 0, 0, 0.7);
+	z-index: -1;
+} 
+
+.paper:after
+{
+	left: auto;
+	right: 12px;
+	transform: skew(5deg) rotate(5deg);
+}
+
+/* .paper {
+    background: #fff;
+    padding: 30px;
+    position: relative;
+}
+
+.paper,
+.paper::before,
+.paper::after {
+    /* Styles to distinguish sheets from one another */
+    /* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+    border: 1px solid #bbb;
+}
+
+.paper::before,
+.paper::after {
+    content: "";
+    position: absolute;
+    height: 95%;
+    width: 99%;
+    background-color: #eee;
+}
+
+.paper::before {
+    right: 15px;
+    top: 0;
+    transform: rotate(-1deg);
+    z-index: -1;
+}
+
+.paper::after {
+    top: 5px;
+    right: -5px;
+    transform: rotate(1deg);
+    z-index: -2;
+} */ */

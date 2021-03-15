@@ -1,0 +1,27 @@
+{{#if error}}
+<h3 class="error-msg">{{error}}</h3>
+{{/if}}
+
+<div class="letter paper">
+    <h4>Dear Person of Importance,</h4>
+    <p>Harvesting the blood of horseshoe crabs is a backward and unnecessary practice that is threatening the survival of this ancient species and of the ecosystems it is connected to. Please act immediately to stop all forms of horseshoe crab blood harvesting taking place within your jurisdiction.</p>
+    <p>Your affectionate voter,</p>
+
+    <form id="signature-form" action="/petition" method="post">
+        <input type="text" name="firstName" id="first-name" required placeholder="Jean">
+        <input type="text" name="lastName" id="last-name" required placeholder="Doe">
+        <input type="email" name="eMail" id="e-mail" required placeholder="jean.doe@somemail.net">
+        <input type="hidden" name="image" id="signature-img-data">
+        {{!-- <output id="signature-output" required></output> --}}
+        <canvas id="signature-canvas" width="500" height="150">canvas for the signature</canvas>
+        {{!-- </output> --}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
+</div>
+
+<button form="signature-form" type="reset">reset form</button>
+<button form="signature-form" type="submit">sign now</button>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="form.js"></script>
