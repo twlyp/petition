@@ -23,7 +23,7 @@ header {
 }
 
 header strong {
-    color: #103593;
+    color: #0b2465;
     text-shadow: 0px 0px 4px #dfdfdf;
 }
 
@@ -88,7 +88,7 @@ main p {
     cursor: pointer;
 }
 
-.btn-text {
+.go-sign-text {
     transform: rotate(-30deg);
 }
 
@@ -102,6 +102,7 @@ main p {
     border-right: 6px solid transparent;
     transform-origin: top center;
     transform: skew(15deg) translateX(-50%);
+    box-shadow: 8px 8px 5px #111111;
 }
 
 .wiggle {

@@ -4,7 +4,7 @@
     background: #dfdfdf;
     color: #333333;
     padding: 3rem 2rem 0 2rem;
-    margin: 3rem 3rem;
+    margin: 3rem 3rem 1rem 3rem;
     box-shadow: #000000 10px 10px 5px 5px;
     font-family: "Syne Mono", Courier, monospace;
     font-size: 1.5rem;
@@ -14,8 +14,34 @@
     font-size: 1.3rem;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
 button {
-    box-shadow: #000000 10px 10px 5px 5px;
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%;
+    margin: 20px;
+    background: linear-gradient(
+        to right,
+        /* rgba(237, 106, 94, 0.6), */ rgba(209, 56, 191, 0.6),
+        rgba(37, 77, 71, 0.6)
+    );
+    color: #dfdfdf;
+    font-weight: bold;
+    font-size: 1.2rem;
+    /* text-transform: uppercase; */
+}
+
+button:hover {
+    font-style: italic;
+}
+
+button:active {
+    box-shadow: 2px 2px 5px #111111;
 }
 
 input {
@@ -27,17 +53,17 @@ input {
     margin: 2px;
 }
 
-input:nth-of-type(1) {
+#first-name {
     grid-column: 2;
     grid-row: 1;
 }
 
-input:nth-of-type(2) {
+#last-name {
     grid-column: 3;
     grid-row: 1;
 }
 
-input:nth-of-type(3) {
+#e-mail {
     grid-column: 2/4;
     grid-row: 2;
 }
@@ -71,59 +97,22 @@ input:nth-of-type(3) {
     background-color: #dfdfdf;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(0, 0, 0, 0.3);
 }
-.paper:before, .paper:after {
-	position: absolute;
-	width: 40%;
-	height: 10px;
-	content: ' ';
-	left: 12px;
-	bottom: 12px;
-	background: transparent;
-	transform: skew(-5deg) rotate(-5deg);
-	box-shadow: 0 10px 12px rgba(0, 0, 0, 0.7);
-	z-index: -1;
-} 
-
-.paper:after
-{
-	left: auto;
-	right: 12px;
-	transform: skew(5deg) rotate(5deg);
-}
-
-/* .paper {
-    background: #fff;
-    padding: 30px;
-    position: relative;
-}
-
-.paper,
-.paper::before,
-.paper::after {
-    /* Styles to distinguish sheets from one another */
-    /* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-    border: 1px solid #bbb;
-}
-
-.paper::before,
-.paper::after {
-    content: "";
+.paper:before,
+.paper:after {
     position: absolute;
-    height: 95%;
-    width: 99%;
-    background-color: #eee;
-}
-
-.paper::before {
-    right: 15px;
-    top: 0;
-    transform: rotate(-1deg);
+    width: 40%;
+    height: 10px;
+    content: " ";
+    left: 12px;
+    bottom: 12px;
+    background: transparent;
+    transform: skew(-5deg) rotate(-5deg);
+    box-shadow: 0 10px 12px rgba(0, 0, 0, 0.7);
     z-index: -1;
 }
 
-.paper::after {
-    top: 5px;
-    right: -5px;
-    transform: rotate(1deg);
-    z-index: -2;
-} */ */
+.paper:after {
+    left: auto;
+    right: 12px;
+    transform: skew(5deg) rotate(5deg);
+}

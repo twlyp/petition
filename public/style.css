@@ -1,4 +1,4 @@
-/* --royal-blue-dark: #0b2465ff;
+/* --royal-blue-dark: #0b2465ff; #103593
 --gainsboro: #dfdfdfff;
 --bittersweet: #ed6a5eff;
 --myrtle-green: #377771ff;
@@ -9,7 +9,7 @@
 }
 
 body {
-    background: #103593;
+    background: #0b2465;
     color: #dfdfdf;
 
     display: flex;
@@ -32,4 +32,8 @@ em {
 
 a {
     color: #ed6a5e;
+}
+
+.shadowed {
+    box-shadow: 8px 8px 5px #111111;
 }

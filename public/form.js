@@ -62,7 +62,8 @@ function trackMovement(e) {
 }
 
 function eventToCtx({ pageX: eX, pageY: eY, target }) {
-    return [eX - target.offsetLeft, eY - target.offsetTop];
+    let offset = $(target).offset();
+    return [eX - offset.left, eY - offset.top];
 }
 
 function setImgData(dataField, outputField, value) {

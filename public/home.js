@@ -7,6 +7,7 @@ goSign
     })
     .on("pointerleave", () => tail.removeClass("wiggle"))
     .on("click", (e) => {
+        goSign.off("pointerleave");
         goSign.animate(
             {
                 top: "0",
