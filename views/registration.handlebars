@@ -1,0 +1,23 @@
+<div class="frame-container">
+    <div class="form-container">
+        <form action="/registration" method="post" id="registration-form">
+            <label for="first">first name</label>
+            <label for="last">last name</label>
+            <label for="email">e-mail</label>
+            <label for="password">password</label>
+            
+            <input class="form-txt" type="text" name="first" id="first" placeholder="first name" required>
+            <input class="form-txt" type="text" name="last" id="last" placeholder="last name" required>
+            <input class="form-txt" type="email" name="email" id="email" placeholder="jean.doe@example.io" required>
+            <input class="form-txt" type="password" name="password" id="password" placeholder="choose a password" required>
+        </form>
+
+        <div id="tail"></div>
+        <button form="registration-form" class='btn' type='reset' id='reset'>Reset</button>
+        <button form="registration-form" class='btn' type='submit' id='submit'>Submit</button>
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="registration.js"></script>

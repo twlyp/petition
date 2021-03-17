@@ -1,29 +1,52 @@
-/* --royal-blue-dark: #0b2465ff; #103593
---gainsboro: #dfdfdfff;
---bittersweet: #ed6a5eff;
---myrtle-green: #377771ff;
---steel-pink: #d138bfff; */
+/* VARIABLES */
+:root {
+    /* COOLORS PALETTE
+    --royal-blue-dark: #0b2465ff;
+    --egyptian-blue: #103593ff;
+    --gainsboro: #dfdfdfff;
+    --bittersweet: #ed6a5eff;
+    --myrtle-green: #377771ff;
+    --steel-pink: #d138bfff; */
+    /* COLORHUNT 1 */
+    --blue: #161d6f;
+    --turquoise: #98ded9;
+    --light-green: #c7ffd8;
+    --white: #f6f6f6;
+    /* COLORHUNT 2
+    --blue: #120078;
+    --violet: #9d0191;
+    --pink: #fd3a69;
+    --yellow: #fecd1a; */
+    --contrast: #ed6a5e;
+    --contrast-radial: radial-gradient(#ed6a5e88, #ed6a5e44);
+    --radial-blue-turquoise: radial-gradient(#161d6faa, #98ded9aa);
+
+    --monospace: "Syne Mono", "Courier New", monospace;
+    --sans: Raleway, Helvetica, sans-serif;
+}
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    background: #0b2465;
-    color: #dfdfdf;
+    background: var(--blue);
+    color: var(--white);
+    font-family: var(--sans);
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     margin: 0;
     overflow-x: hidden;
-    font-family: Raleway, Helvetica, sans-serif;
 }
 
+/* GENERAL STYLES */
 strong {
     font-style: bold;
-    color: #ed6a5e;
+    color: var(--contrast);
 }
 
 em {
@@ -31,9 +54,76 @@ em {
 }
 
 a {
-    color: #ed6a5e;
+    color: var(--contrast);
 }
 
 .shadowed {
-    box-shadow: 8px 8px 5px #111111;
+    box-shadow: 8px 8px 5px 1px #111111;
+}
+
+label {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.btn {
+    background: var(--light-green);
+    border: 4px solid var(--turquoise);
+    color: var(--blue);
+    font-size: 2rem;
+    min-width: 5em;
+    min-height: 2em;
+    border-radius: 2em;
+}
+
+/* NAV BAR  */
+nav {
+    padding: 10px 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: clamp(2rem, 3rem, 10vh);
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background: var(--blue);
+    z-index: 10;
+}
+
+.nav-btn {
+    border: none;
+    background: none;
+    color: var(--white);
+}
+
+/* ERROR MESSAGE  */
+.overlay {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#error-overlay {
+    position: fixed;
+    z-index: 100;
+    background: #333333cc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-message {
+    font-size: 2rem;
+    margin: 0.5rem;
+}
+
+#error-btn {
+    margin: 2rem;
 }

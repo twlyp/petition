@@ -7,13 +7,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400;1,700&family=Syne+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="form.css">
+    {{#if landing}}
+    <link rel="stylesheet" href="landing.css">
+    {{else}}
+    <link rel="stylesheet" href="main.css">
+    {{/if}}
     <title>stop harvesting of horseshoe crab blood</title>
 </head>
 <body>
+    {{#if error}}
+    <div class="overlay" id="error-overlay">
+        <p class="error-message">{{error}}</p>
+        <p class="error-message">Please try again.</p>
+        <button class="btn shadowed" id="error-btn">Close</button>
+    </div>
+    {{/if}}
+
+    {{>nav}}
 
     {{{body}}}
 
+    <script src="script.js"></script>
 </body>
 </html>

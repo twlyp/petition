@@ -1,0 +1,68 @@
+body {
+    overflow: hidden;
+}
+
+.frame-container {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    width: min(60vw, 350px);
+    height: min(80vh, 500px);
+    position: relative;
+    background: var(--white);
+    color: var(--blue);
+    transform: rotate(30deg);
+    border-radius: 40%;
+    border: 10px solid var(--contrast);
+    background: lightyellow;
+}
+
+#registration-form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.form-txt {
+    font-family: var(--monospace);
+    font-size: 1.5rem;
+
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: 2px solid hsl(0, 0%, 20%);
+    transform: rotate(-30deg);
+}
+
+#tail {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform-origin: top center;
+    transform: skewX(15deg) translateX(-50%);
+    border-top: 300px solid var(--contrast);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+#reset {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    transform: rotate(-30deg) translate(-100%, 0);
+}
+
+#submit {
+    position: absolute;
+    bottom: 10%;
+    right: 0;
+    transform: rotate(-30deg) translate(100%, 0);
+}

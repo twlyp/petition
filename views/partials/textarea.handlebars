@@ -1,0 +1,17 @@
+<input
+{{#if class}}
+class="{{class}}"
+{{/if}}
+{{#if email}}
+type="email"
+{{else}}
+    {{#if password}}
+    type="password"
+    {{else}}
+    type="text"
+    {{/if}}
+{{/if}}
+name="{{id}}" id="{{id}}" max="255" placeholder="{{id}}"
+{{#if required}}
+required
+{{/if}}>

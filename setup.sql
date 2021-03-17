@@ -1,11 +1,19 @@
-DROP TABLE IF EXISTS signatures;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE signatures (
-    id         SERIAL PRIMARY KEY,
-    first_name VARCHAR NOT NULL CHECK (first_name != ''),
-    last_name  VARCHAR NOT NULL CHECK (last_name != ''),
-    image      VARCHAR NOT NULL CHECK (image != ''),
-    e_mail     VARCHAR UNIQUE NOT NULL CHECK (e_mail != ''),
-    timestamp  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    first VARCHAR(255) NOT NULL,
+    last VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS signatures;
+
+CREATE TABLE signatures(
+    id SERIAL PRIMARY KEY,
+    signature TEXT NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
