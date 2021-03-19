@@ -1,0 +1,19 @@
+<div class="frame-container">
+    <ol id="signers-list">
+    {{#each rows}}
+        <li>
+        {{#if url}}
+        <a href="{{url}}">{{first}} {{last}}</a>
+        {{else}}
+        {{first}} {{last}}
+        {{/if}}
+        {{#if age}}
+        {{age}}
+        {{/if}}
+        {{#if city}}
+        <a href="/signers/{{city}}">{{city}}</a>
+        {{/if}}
+        </li>
+    {{/each}}
+    </ol>
+</div>

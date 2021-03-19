@@ -1,0 +1,20 @@
+<div class="frame-container">
+    <div class="form-container">
+        <form action="/moreinfo" method="post" id="moreinfo-form">
+            <label for="age">age</label>
+            <label for="city">city</label>
+            <label for="www">home page</label>
+            
+            <input class="form-txt" type="number" name="age" id="age" placeholder="age" min=0 max=255>
+            <input class="form-txt" type="text" name="city" id="city" placeholder="city">
+            <input class="form-txt" type="text" name="url" id="url" placeholder="home page">
+        
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+
+        <div id="tail"></div>
+        <button form="moreinfo-form" class='btn' type='reset' id='reset'>Reset</button>
+        <button form="moreinfo-form" class='btn' type='submit' id='submit'>Submit</button>
+
+    </div>
+</div>

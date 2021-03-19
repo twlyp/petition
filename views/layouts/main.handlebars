@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400;1,700&family=Syne+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
     {{#if landing}}
-    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="/landing.css">
     {{else}}
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" type="text/css" href="/main.css">
     {{/if}}
     <title>stop harvesting of horseshoe crab blood</title>
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     {{#if error}}
     <div class="overlay" id="error-overlay">
         <p class="error-message">{{error}}</p>
@@ -27,6 +30,6 @@
 
     {{{body}}}
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>

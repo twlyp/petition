@@ -1,6 +1,6 @@
 <nav>
     {{#if userId }}
-    <p class="greeting">hello <span id="user-name"></span>, welcome back!</p>
+    <p class="greeting">hello {{userFirst}}, welcome back!</p>
     <button type="button" class="nav-btn" id="logout">log out</button>
     {{else}}
     <form action="/login" method="post" id="login-form">
