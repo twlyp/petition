@@ -1,34 +1,30 @@
-<div class="frame-container">
-    <div class="content-container shadowed">
-        <h3 class="page-title">Registration</h3>
+<div class="content-container shadowed">
+    <h3 class="page-title">Registration</h3>
 
-        <form action="/registration" method="post" id="registration-form">
-            <ul class="form-wrapper">
-                <li class="form-row">
-                    <label for="first">First name: </label>
-                    <input type="text" name="first" id="first"required>
-                </li>
-                <li class="form-row">
-                    <label for="last">Last name: </label>
-                    <input type="text" name="last" id="last" required>
-                </li>
-                <li class="form-row">
-                    <label for="email">E-mail: </label>
-                    <input type="email" name="email" id="email" required>
-                </li>
-                <li class="form-row">
-                    <label for="password">Password: </label>
-                    <input type="password" name="password" id="password" required>
-                </li>
-                <li class="button-row">
-                    <button class='btn shadowed' type='reset' id='reset'>Reset</button>
-                    <button class='btn shadowed' type='submit' id='submit'>Submit</button>
-                </li>
-            </ul>
-            
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        </form>
-    </div>
+    <form action="/registration" method="post" id="registration-form">
+        <ul class="form-wrapper">
+            <li class="form-row">
+                <label for="first">First name: </label>
+                <input type="text" name="first" id="first"required>
+            </li>
+            <li class="form-row">
+                <label for="last">Last name: </label>
+                <input type="text" name="last" id="last" required>
+            </li>
+            <li class="form-row">
+                <label for="email">E-mail: </label>
+                <input type="email" name="email" id="email" required>
+            </li>
+            <li class="form-row">
+                <label for="password">Password: </label>
+                <input type="password" name="password" id="password" required>
+            </li>
+            <li class="button-row">
+                <button class='btn shadowed' type='reset' id='reset'>Reset</button>
+                <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+            </li>
+        </ul>
+        
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
 </div>
-
-{{!-- <script src="registration.js"></script> --}}

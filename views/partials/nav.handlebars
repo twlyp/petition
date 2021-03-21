@@ -1,15 +1,18 @@
 <nav>
     {{#if userId }}
-    <p class="greeting">hello {{userFirst}}, welcome back!</p>
-    <button type="button" class="nav-btn" id="nav-logout">log out</button>
+    <p class="greeting">Hello {{userFirst}}, welcome back!</p>
+    {{>signatureLink}}
+    <a href="/signers">See signers</a>
+    <a href="/edit">Edit profile</a>
+    <a href='/logout'>Log out</a>
     {{else}}
     <form action="/login" method="post" id="nav-form">
         <input type="email" name="email" id="nav-email" placeholder=" e-mail" required>
         <input type="password" name="password" id="nav-password" placeholder=" password" required>
-        <button type="submit" class="nav-btn" id="nav-login">log in</button>
+        <button type="submit" id="nav-login">Log in</button>
 
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </form>
-    <button type="button" class="nav-btn" id="nav-signup">sign up</button>
+    <a href="/registration">Sign up</a>
     {{/if}}
 </nav>

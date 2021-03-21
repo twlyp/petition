@@ -2,6 +2,8 @@ const spicedPg = require("spiced-pg");
 
 const db = spicedPg("postgres:leo@localhost/petition");
 
+const capitalize = (str) => str.replace(/^\w/, (c) => c.toUpperCase());
+
 module.exports.listUsers = () =>
     db.query("SELECT * FROM users").then((result) => result.rows);
 
@@ -25,7 +27,7 @@ module.exports.addUser = ({ first, last, email, password }) =>
             "INSERT INTO users (first, last, email, password) " +
                 "VALUES ($1, $2, $3, $4) " +
                 "RETURNING id, first",
-            [first, last, email, password]
+            [capitalize(first), capitalize(last), email, password]
         )
         .then((result) => result.rows);
 
@@ -38,7 +40,7 @@ module.exports.deleteUser = (userId) =>
 module.exports.updateUserData = (userId, { first, last, email }) =>
     db.query(
         "UPDATE users SET (first, last, email) = ($2, $3, $4) WHERE id = $1",
-        [userId, first, last, email]
+        [userId, capitalize(first), capitalize(last), email]
     );
 
 module.exports.getUserBy = (parameter, value) => {
@@ -81,7 +83,7 @@ module.exports.addInfo = (userId, { age, city, url }) =>
             "VALUES ($1, $2, $3, $4) " +
             "ON CONFLICT (user_id) " +
             "DO UPDATE SET (age, city, url) = ($2, $3, $4)",
-        [userId, age, city, url]
+        [userId, age, capitalize(city), url]
     );
 
 module.exports.getData = (userId) =>

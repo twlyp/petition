@@ -1,5 +1,10 @@
-<div class="frame-container">
-    <ol id="signers-list">
+<div class="content-container shadowed">
+    <h3 class="page-title">Signers</h3>
+    {{#if byCity}}
+    <h5 class="subtitle">from {{byCity}}</h5>
+    {{/if}}
+
+    <ol class="signers-list">
     {{#each rows}}
         <li>
         {{#if url}}
@@ -16,4 +21,10 @@
         </li>
     {{/each}}
     </ol>
+
+    <div class="button-row">
+        <div class="btn btn-link shadowed">
+            {{>signatureLink}}
+        </div>
+    </div>
 </div>

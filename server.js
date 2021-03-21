@@ -1,12 +1,12 @@
 // ================================ ERROR HELPERS ================================ //
-const ERRORS = {
+const ERRORS = (exports.ERRORS = {
     auth_error: "Invalid e-mail/password combination.",
     reg_error: "I couldn't register this user.",
     sig_error: "I couldn't find your signature.",
     user_notfound: "I couldn't find your user profile.",
-};
+});
 
-function parseDbErrors(string) {
+const parseDbErrors = (exports.parseDbErrors = function (string) {
     const COLS = {
         first: "first name",
         last: "last name",
@@ -29,7 +29,7 @@ function parseDbErrors(string) {
     if (constraintType == "key") return `This ${COLS[column]} already exists.`;
     if (constraintType == "check")
         return `Please input a valid ${COLS[column]}.`;
-}
+});
 
 // ================================ REQUIRES ================================ //
 const express = require("express");
@@ -42,7 +42,7 @@ const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 
 // ================================ INIT ================================ //
-const app = express();
+const app = (exports.app = express());
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -75,13 +75,12 @@ app.use((req, res, next) => {
     res.locals.userFirst = req.session.userFirst;
     // if there's an error set the error message then clear the cookie
     res.locals.error = req.session.errorMsg;
-    req.session.errorMsg = null;
 
     next();
 }); // csurf init + setting session cookies
 
 // ================================ ROUTES ================================ //
-app.get("/", (req, res) => res.render("landing", { landing: true }));
+app.get("/", (req, res) => res.render("landing"));
 
 app.route("/login")
     .get(ifLoggedIn("/petition"), (req, res) => res.render("login"))
@@ -123,6 +122,8 @@ app.route("/registration")
             req.session.userFirst = queryUser[0].first;
             return res.redirect("/moreinfo");
         } catch (e) {
+            if (/Illegal\sarguments/.test(e.message))
+                next({ constraint: "users_password_check" });
             next(e);
         }
     });
@@ -166,10 +167,16 @@ app.route("/petition")
         }
     );
 
-app.route("/signers/:city?").get(ifLoggedOut("/registration"), (req, res) =>
-    db
-        .listSignatures(req.params.city)
-        .then((result) => res.render("signers", { rows: result }))
+app.route("/signers/:city?").get(
+    ifLoggedOut("/registration"),
+    ifNotSigned("/petition"),
+    (req, res) =>
+        db.listSignatures(req.params.city).then((result) =>
+            res.render("signers", {
+                rows: result,
+                byCity: req.params.city,
+            })
+        )
 );
 
 app.route("/thanks").get(
@@ -254,18 +261,23 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.use((err, req, res, next) => {
-    console.log("i caught the error");
+app.post("/clearerror", (req, res) => {
+    req.session.errorMsg = null;
+    res.redirect("back");
+});
 
+app.use((err, req, res, next) => {
     if (err.constraint) {
         req.session.errorMsg = parseDbErrors(err.constraint);
         return res.redirect("back");
     }
 
-    return res.status(500).send(`${err.name}: ${err.stack}`);
+    return res.status(500).send(`${err.name}: ${err.message}`);
 });
 
-app.listen(8080, () => console.log("listening..."));
+if (require.main == module) {
+    app.listen(process.env.PORT || 8080);
+}
 
 // ================================ MIDDLEWARE ================================ //
 

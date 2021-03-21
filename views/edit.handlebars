@@ -1,30 +1,48 @@
-<div class="frame-container">
-    <div class="form-container">
-        <form action="/edit" method="post" id="data-form">
-            <label for="first">first name</label>
-            <label for="last">last name</label>
-            <label for="email">e-mail</label>
-            <label for="password">password</label>
-            <label for="age">age</label>
-            <label for="city">city</label>
-            <label for="url">home page</label>
+<div class="content-container shadowed">
+    <h3 class="page-title">Edit your profile</h3>
 
-            {{#with data}}
-            <input value="{{first}}" class="form-txt" type="text" name="first" id="first" required>
-            <input value="{{last}}" class="form-txt" type="text" name="last" id="last" required>
-            <input value="{{email}}" class="form-txt" type="email" name="email" id="email" required>
-            <input class="form-txt" type="password" name="password" id="password">
-            <input value="{{age}}" class="form-txt" type="number" name="age" id="age" min=0 max=255>
-            <input value="{{city}}" class="form-txt" type="text" name="city" id="city">
-            <input value="{{url}}" class="form-txt" type="text" name="url" id="url">
-            {{/with}}
-        
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        </form>
+    <form action="/edit" method="post" id="data-form">
+    <ul class="form-wrapper">
+        {{#with data}}
+        <li class="form-row">
+            <label for="first">First name: </label>
+            <input value="{{first}}" type="text" name="first" id="first"required>
+        </li>
+        <li class="form-row">
+            <label for="last">Last name: </label>
+            <input value="{{last}}" type="text" name="last" id="last" required>
+        </li>
+        <li class="form-row">
+            <label for="email">E-mail: </label>
+            <input value="{{email}}" type="email" name="email" id="email" required>
+        </li>
 
-        <div id="tail"></div>
-        <button form="data-form" class='btn' type='reset' id='reset'>Reset</button>
-        <button form="data-form" class='btn' type='submit' id='submit'>Submit</button>
+        <li class="form-row">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password">
+        </li>
+        <li class="form-row">
+            <label for="age">Age: </label>
+            <input value="{{age}}" type="number" name="age" id="age" min=0 max=140>
+        </li>
+        <li class="form-row">
+            <label for="city">City: </label>
+            <input value="{{city}}" type="text" name="city" id="city">
+        </li>
+        <li class="form-row">
+            <label for="url">Home page: </label>
+            <input value="{{url}}" type="text" name="url" id="url">
+        </li>
+        {{/with}}
+        <li class="button-row">
+            <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+            <div class="btn btn-link shadowed">
+                {{>signatureLink}}
+            </div>
+        </li>
+    </ul>
 
-    </div>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    </form>
 </div>
