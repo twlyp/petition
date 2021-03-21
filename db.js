@@ -1,6 +1,8 @@
 const spicedPg = require("spiced-pg");
 
-const db = spicedPg("postgres:leo@localhost/petition");
+const db = spicedPg(
+    process.env.DATABASE_URL || "postgres:leo@localhost/petition"
+);
 
 const capitalize = (str) => str.replace(/^\w/, (c) => c.toUpperCase());
 
