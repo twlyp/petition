@@ -33,7 +33,7 @@ const parseDbErrors = (exports.parseDbErrors = function (string) {
 
 // ================================ REQUIRES ================================ //
 const express = require("express");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const db = require("./db");
 
 const bc = require("./bc");
@@ -47,7 +47,7 @@ const app = (exports.app = express());
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 
 app.use(
     express.urlencoded({
@@ -59,7 +59,7 @@ app.use(express.static("./public"));
 
 app.use(
     cookieSession({
-        secret: "This is my closest guarded secret.",
+        secret: process.env.SESSION_SECRET || "whatever",
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 ); // cookie-session init
