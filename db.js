@@ -88,6 +88,15 @@ module.exports.addInfo = (userId, { age, city, url }) =>
         [userId, age, capitalize(city), url]
     );
 
+module.exports.addToProfile = (userId, parameter, value) =>
+    db.query(
+        `INSERT INTO user_profiles (user_id, ${parameter}) ` +
+            "VALUES ($1, $2) " +
+            "ON CONFLICT (user_id) " +
+            `DO UPDATE SET ${parameter} = $2`,
+        [userId, value]
+    );
+
 module.exports.getData = (userId) =>
     db
         .query(

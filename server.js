@@ -131,15 +131,30 @@ app.route("/registration")
 app.route("/moreinfo")
     .get(ifLoggedOut("/registration"), (req, res) => res.render("moreinfo"))
     .post(ifLoggedOut("/registration"), (req, res) => {
-        const httpMask = /^https?:\/\//;
-        req.body.url = req.body.url.trim();
-        // if it doesn't start with http(s):// add it
-        req.body.url =
-            `${httpMask.test(req.body.url) ? "" : "http://"}` + req.body.url;
+        let promises = [];
 
-        return db
-            .addInfo(req.session.userId, req.body)
-            .then(() => res.redirect("/petition"));
+        const httpMask = /^https?:\/\//;
+        if (req.body.url) {
+            req.body.url = req.body.url.trim();
+            // if it doesn't start with http(s):// add it
+            req.body.url =
+                `${httpMask.test(req.body.url) ? "" : "http://"}` +
+                req.body.url;
+            promises.push(
+                db.addToProfile(req.session.userId, "url", req.body.url)
+            );
+        }
+
+        const COLS = ["age", "city"];
+        COLS.forEach((el) =>
+            req.body[el]
+                ? promises.push(
+                      db.addToProfile(req.session.userId, el, req.body[el])
+                  )
+                : undefined
+        );
+
+        return Promise.all(promises).then(() => res.redirect("/petition"));
     });
 
 app.route("/petition")
@@ -171,12 +186,13 @@ app.route("/signers/:city?").get(
     ifLoggedOut("/registration"),
     ifNotSigned("/petition"),
     (req, res) =>
-        db.listSignatures(req.params.city).then((result) =>
+        db.listSignatures(req.params.city).then((result) => {
+            for (let k in result) if (!result[k]) delete result[k];
             res.render("signers", {
                 rows: result,
                 byCity: req.params.city,
-            })
-        )
+            });
+        })
 );
 
 app.route("/thanks").get(
