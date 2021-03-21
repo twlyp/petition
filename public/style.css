@@ -83,7 +83,7 @@ button {
     background: var(--light-green);
     border: 4px solid var(--turquoise);
     color: var(--blue);
-    font-size: 2rem;
+    font-size: 1.5rem;
     min-width: 5em;
     min-height: 2em;
     border-radius: 2em;
@@ -285,7 +285,7 @@ h3.headline {
 
 .content-container {
     margin-top: 2rem;
-    width: min(100vw, 600px);
+    min-width: min(100vw, 768px);
     position: relative;
     background: var(--white);
     color: var(--blue);
