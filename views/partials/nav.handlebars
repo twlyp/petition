@@ -1,15 +1,15 @@
 <nav>
     {{#if userId }}
     <p class="greeting">hello {{userFirst}}, welcome back!</p>
-    <button type="button" class="nav-btn" id="logout">log out</button>
+    <button type="button" class="nav-btn" id="nav-logout">log out</button>
     {{else}}
-    <form action="/login" method="post" id="login-form">
+    <form action="/login" method="post" id="nav-form">
         <input type="email" name="email" id="nav-email" placeholder=" e-mail" required>
         <input type="password" name="password" id="nav-password" placeholder=" password" required>
-        <button type="submit" class="nav-btn" id="login">log in</button>
+        <button type="submit" class="nav-btn" id="nav-login">log in</button>
 
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </form>
-    <button type="button" class="nav-btn" id="signup">sign up</button>
+    <button type="button" class="nav-btn" id="nav-signup">sign up</button>
     {{/if}}
 </nav>

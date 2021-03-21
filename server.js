@@ -1,30 +1,47 @@
-// error codes from db module
-const dbErrors = {
-    codes: ["signatures_e_mail_key", "signatures_image_check", "auth_error"],
-    msgs: [
-        "E-mail already in use!",
-        "Please click and drag in the box to sign.",
-        "Invalid e-mail/password combination.",
-    ],
+// ================================ ERROR HELPERS ================================ //
+const ERRORS = {
+    auth_error: "Invalid e-mail/password combination.",
+    reg_error: "I couldn't register this user.",
+    sig_error: "I couldn't find your signature.",
+    user_notfound: "I couldn't find your user profile.",
 };
 
+function parseDbErrors(string) {
+    const COLS = {
+        first: "first name",
+        last: "last name",
+        email: "e-mail address",
+        password: "password",
+        signature: "signature",
+        user_id: "user ID",
+        age: "age",
+        city: "city",
+        url: "home page",
+    };
+
+    let segments = string.split("_");
+    const table = segments.shift();
+    const constraintType = segments.pop();
+    const column = segments.join("_");
+
+    if (table == "signatures" && constraintType == "key")
+        return "You already signed the petition!";
+    if (constraintType == "key") return `This ${COLS[column]} already exists.`;
+    if (constraintType == "check")
+        return `Please input a valid ${COLS[column]}.`;
+}
+
+// ================================ REQUIRES ================================ //
 const express = require("express");
 const morgan = require("morgan");
 const db = require("./db");
 
 const bc = require("./bc");
-// returns the "body" object with password changed to its hash
-const hashPsw = (body) =>
-    bc
-        .hash(body.password)
-        .then((hashed) =>
-            Object.defineProperty(body, "password", { value: hashed })
-        );
-
 const hb = require("express-handlebars");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 
+// ================================ INIT ================================ //
 const app = express();
 
 app.engine("handlebars", hb());
@@ -57,61 +74,62 @@ app.use((req, res, next) => {
     res.locals.signatureId = req.session.signatureId;
     res.locals.userFirst = req.session.userFirst;
     // if there's an error set the error message then clear the cookie
-    res.locals.error = req.session.errorCode
-        ? dbErrors.msgs[req.session.errorCode]
-        : undefined;
-    req.session.errorCode = null;
+    res.locals.error = req.session.errorMsg;
+    req.session.errorMsg = null;
 
     next();
 }); // csurf init + setting session cookies
 
-app.get("/", (req, res) => {
-    // console.log("req.session.errorCode:", req.session.errorCode);
-    // console.log("res.locals.error:", res.locals.error);
-    // console.log("req.session.userId:", req.session.userId);
-    // console.log("res.locals.userId:", res.locals.userId);
-    // console.log("res.locals.signatureId:", res.locals.signatureId);
+// ================================ ROUTES ================================ //
+app.get("/", (req, res) => res.render("landing", { landing: true }));
 
-    res.render("landing", {
-        landing: true,
+app.route("/login")
+    .get(ifLoggedIn("/petition"), (req, res) => res.render("login"))
+    .post(ifLoggedIn("/petition"), async function (req, res, next) {
+        try {
+            const queryUser = await db.getUserBy("email", req.body.email);
+            const match =
+                queryUser.length === 1
+                    ? await bc.compare(req.body.password, queryUser[0].password)
+                    : null;
+            if (!match) {
+                req.session.errorMsg = ERRORS.auth_error;
+            } else {
+                req.session.userId = queryUser[0].id;
+                req.session.userFirst = queryUser[0].first;
+                const querySignature = await db.getSignatureId(
+                    req.session.userId
+                );
+                req.session.signatureId =
+                    querySignature.length === 1 ? querySignature[0].id : null;
+            }
+            return res.redirect("/petition");
+        } catch (e) {
+            next(e);
+        }
     });
-});
-
-app.route("/login").post(async function (req, res, next) {
-    let backURL = req.header("Referer") || "/";
-    let dbUser = await db.getUser("email", req.body.email);
-    let match =
-        dbUser.length === 1
-            ? bc.compare(req.body.password, dbUser[0].password)
-            : null;
-    if (match) {
-        req.session.userId = dbUser[0].id;
-        req.session.userFirst = dbUser[0].first;
-        res.redirect(backURL);
-    } else {
-        req.session.errorCode = 2;
-        res.redirect(backURL);
-    }
-});
 
 app.route("/registration")
-    .get((req, res) => {
-        if (req.session.userId) return res.redirect("/petition");
-        res.render("registration");
-    })
-    .post((req, res) =>
-        hashPsw(req.body)
-            .then((hashedBody) => db.addUser(hashedBody))
-            .then((result) => {
-                req.session.userId = result.id;
-                req.session.userFirst = result.first;
-                res.redirect("/moreinfo");
-            })
-    );
+    .get(ifLoggedIn("/petition"), (req, res) => res.render("registration"))
+    .post(ifLoggedIn("/petition"), async function (req, res, next) {
+        try {
+            req.body.password = await bc.hash(req.body.password);
+            let queryUser = await db.addUser(req.body);
+            if (queryUser.length != 1) {
+                req.session.errorMsg = ERRORS.reg_error;
+                return res.redirect("/registration");
+            }
+            req.session.userId = queryUser[0].id;
+            req.session.userFirst = queryUser[0].first;
+            return res.redirect("/moreinfo");
+        } catch (e) {
+            next(e);
+        }
+    });
 
 app.route("/moreinfo")
-    .get(isLoggedIn, (req, res) => res.render("moreinfo"))
-    .post(isLoggedIn, (req, res) => {
+    .get(ifLoggedOut("/registration"), (req, res) => res.render("moreinfo"))
+    .post(ifLoggedOut("/registration"), (req, res) => {
         const httpMask = /^https?:\/\//;
         req.body.url = req.body.url.trim();
         // if it doesn't start with http(s):// add it
@@ -124,39 +142,112 @@ app.route("/moreinfo")
     });
 
 app.route("/petition")
-    .get(isLoggedIn, (req, res) => {
-        if (req.session.hasSigned) {
-            res.redirect("/thanks");
-        } else {
-            res.render("petition");
+    .get(ifLoggedOut("/registration"), ifHasSigned("/thanks"), (req, res) =>
+        res.render("petition")
+    )
+    .post(
+        ifLoggedOut("/registration"),
+        ifHasSigned("/thanks"),
+        async function (req, res, next) {
+            try {
+                const querySignature = await db.addSignature({
+                    userId: req.session.userId,
+                    signature: req.body.signature,
+                });
+                if (querySignature.length != 1) {
+                    req.session.errorMsg = ERRORS.sig_error;
+                    return res.redirect("/petition");
+                }
+                req.session.signatureId = querySignature[0].id;
+                return res.redirect("/thanks");
+            } catch (e) {
+                next(e);
+            }
         }
-    })
-    .post(isLoggedIn, (req, res) => {
-        db.addSignature({
-            userId: req.session.userId,
-            signature: req.body.signature,
-        }).then(() => {
-            req.session.hasSigned = true;
-            res.redirect("/thanks");
-        });
-    });
+    );
 
-app.route("/signers/:city?").get((req, res) =>
+app.route("/signers/:city?").get(ifLoggedOut("/registration"), (req, res) =>
     db
         .listSignatures(req.params.city)
         .then((result) => res.render("signers", { rows: result }))
 );
 
-app.route("/thanks").get(isLoggedIn, (req, res) =>
-    db.getSignature(req.session.userId).then((result) => {
-        if (result.length === 0 || !result[0].signature) {
-            req.session.hasSigned = null;
-            return res.redirect("/petition");
+app.route("/thanks").get(
+    ifLoggedOut("/registration"),
+    ifNotSigned("/petition"),
+    async function (req, res, next) {
+        try {
+            const querySignature = await db.getSignature(req.session.userId);
+            if (querySignature.length != 1) {
+                req.session.signatureId = null;
+                req.session.errorMsg = ERRORS.sig_error;
+                return res.redirect("/petition");
+            }
+            return res.render("thanks", {
+                imgData: querySignature[0].signature,
+            });
+        } catch (e) {
+            next(e);
         }
-        req.session.hasSigned = true;
-        return res.render("thanks", { imgData: result[0].signature });
-    })
+    }
 );
+
+app.route("/edit")
+    .get(ifLoggedOut("/registration"), async function (req, res, next) {
+        try {
+            let queryUserData = await db.getData(req.session.userId);
+            if (queryUserData.length != 1) {
+                req.session = null;
+                req.session.errorMsg = ERRORS.user_notfound;
+                return res.redirect("/registration");
+            }
+            return res.render("edit", { data: queryUserData[0] });
+        } catch (e) {
+            next(e);
+        }
+    })
+    .post(ifLoggedOut("/registration"), (req, res) => {
+        const destructurer = ({ first, last, email, age, city, url }) => [
+            { first, last, email },
+            { age, city, url },
+        ];
+        const destructuredBody = destructurer(req.body);
+
+        let updatePassword = req.body.password
+            ? bc
+                  .hash(req.body.password)
+                  .then((hashed) =>
+                      db.updatePassword(req.session.userId, hashed)
+                  )
+            : Promise.resolve();
+        let updateUserData = db.updateUserData(
+            req.session.userId,
+            destructuredBody[0]
+        );
+        let updateProfileData = db.addInfo(
+            req.session.userId,
+            destructuredBody[1]
+        );
+
+        return Promise.all([
+            updatePassword,
+            updateUserData,
+            updateProfileData,
+        ]).then(() => res.redirect("/signers"));
+    });
+
+app.route("/delete/:what").post(ifLoggedOut("/registration"), (req, res) => {
+    if (req.params.what == "signature")
+        return db.deleteSignature(req.session.userId).then(() => {
+            req.session.signatureId = null;
+            res.redirect("/petition");
+        });
+    if (req.params.what == "user")
+        return db.deleteUser(req.session.userId).then(() => {
+            req.session = null;
+            res.redirect("/registration");
+        });
+});
 
 app.get("/logout", (req, res) => {
     req.session = null;
@@ -165,25 +256,35 @@ app.get("/logout", (req, res) => {
 
 app.use((err, req, res, next) => {
     console.log("i caught the error");
-    console.log(err);
-    //next(err);
 
-    let backURL = req.header("Referer") || "/";
-
-    let code = err.constraint || err.message;
-
-    let index = dbErrors.codes.indexOf(code);
-    if (index > -1) {
-        req.session.errorCode = index;
-        res.redirect(backURL);
-    } else {
-        res.status(500).send(`${err.name}: ${err.message}`);
+    if (err.constraint) {
+        req.session.errorMsg = parseDbErrors(err.constraint);
+        return res.redirect("back");
     }
+
+    return res.status(500).send(`${err.name}: ${err.stack}`);
 });
 
 app.listen(8080, () => console.log("listening..."));
 
-function isLoggedIn(req, res, next) {
-    if (req.session.userId) return next();
-    res.redirect("back");
+// ================================ MIDDLEWARE ================================ //
+
+function ifLoggedOut(destination = "/registration") {
+    return (req, res, next) =>
+        req.session.userId ? next() : res.redirect(destination);
+}
+
+function ifLoggedIn(destination = "/petition") {
+    return (req, res, next) =>
+        req.session.userId ? res.redirect(destination) : next();
+}
+
+function ifNotSigned(destination = "/petition") {
+    return (req, res, next) =>
+        req.session.signatureId ? next() : res.redirect(destination);
+}
+
+function ifHasSigned(destination = "/thanks") {
+    return (req, res, next) =>
+        req.session.signatureId ? res.redirect(destination) : next();
 }

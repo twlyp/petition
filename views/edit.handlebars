@@ -7,22 +7,24 @@
             <label for="password">password</label>
             <label for="age">age</label>
             <label for="city">city</label>
-            <label for="www">home page</label>
-            
-            <input value="{{first}}" class="form-txt" type="text" name="first" id="first">
-            <input value="{{last}}" class="form-txt" type="text" name="last" id="last">
-            <input value="{{email}}" class="form-txt" type="email" name="email" id="email">
-            <input value="{{password}}" class="form-txt" type="password" name="password" id="password">
-            <input value="{{age}}" class="form-txt" type="number" name="age" id="age"min=0 max=255>
+            <label for="url">home page</label>
+
+            {{#with data}}
+            <input value="{{first}}" class="form-txt" type="text" name="first" id="first" required>
+            <input value="{{last}}" class="form-txt" type="text" name="last" id="last" required>
+            <input value="{{email}}" class="form-txt" type="email" name="email" id="email" required>
+            <input class="form-txt" type="password" name="password" id="password">
+            <input value="{{age}}" class="form-txt" type="number" name="age" id="age" min=0 max=255>
             <input value="{{city}}" class="form-txt" type="text" name="city" id="city">
             <input value="{{url}}" class="form-txt" type="text" name="url" id="url">
+            {{/with}}
         
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
         </form>
 
         <div id="tail"></div>
-        <button form="registration-form" class='btn' type='reset' id='reset'>Reset</button>
-        <button form="registration-form" class='btn' type='submit' id='submit'>Submit</button>
+        <button form="data-form" class='btn' type='reset' id='reset'>Reset</button>
+        <button form="data-form" class='btn' type='submit' id='submit'>Submit</button>
 
     </div>
 </div>

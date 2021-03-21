@@ -1,5 +1,5 @@
 (function () {
     $("#error-btn").click(() => $("#error-overlay").remove());
-    $("#signup").click(() => (window.location = "/registration"));
-    $("#logout").click(() => (window.location = "/logout"));
+    $("#nav-signup").click(() => (window.location = "/registration"));
+    $("#nav-logout").click(() => (window.location = "/logout"));
 })(); // iife

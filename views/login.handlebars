@@ -1,0 +1,25 @@
+<div class="frame-container">
+    <div class="content-container shadowed">
+        <h3 class="page-title">Login</h3>
+
+        <form action="/login" method="post" id="login-form">
+            <ul class="form-wrapper">
+                <li class="form-row">
+                    <label for="email">E-mail: </label>
+                    <input type="email" name="email" id="email" required>
+                </li>
+
+                <li class="form-row">
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password" required>
+                </li>
+
+                <li class="button-row">
+                    <button class="btn shadowed" type="submit">Login</button>
+                </li>
+            </ul>
+
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        </form>
+    </div>
+</div>

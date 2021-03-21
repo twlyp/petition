@@ -1,14 +1,20 @@
 <div class="frame-container">
-    <div class="form-container">
-        <form action="/petition" method='post' id="signature-form">
-            <input type="hidden" name="signature" id="signature-img-data">
-            <canvas id="signature-canvas" width="500" height="150">canvas for the signature</canvas>
-            <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        </form>
-
-        <div id="tail"></div>
-        <button form="signature-form" class='btn' type='reset' id='reset'>Reset</button>
-        <button form="signature-form" class='btn' type='submit' id='submit'>Submit</button>
+    <div class="content-container shadowed">
+        <h3 class="page-title">Make your voice heard!</h3>
+        <h5 class="subtitle">Click and drag to sign the petition.</h5>
+        
+        <div class="form-wrapper">
+            <form action="/petition" method='post' id="signature-form">
+                <input type="hidden" name="signature" id="signature-img-data">
+                <canvas class="signature" id="signature-canvas" width="500" height="150">canvas for the signature</canvas>
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            
+            <div class="button-row">
+                <button class='btn shadowed' type='reset' id='reset'>Reset</button>
+                <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+            </div>
+            </form>
+        </div>
     </div>
 </div>
 

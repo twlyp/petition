@@ -1,23 +1,33 @@
 <div class="frame-container">
-    <div class="form-container">
+    <div class="content-container shadowed">
+        <h3 class="page-title">Registration</h3>
+
         <form action="/registration" method="post" id="registration-form">
-            <label for="first">first name</label>
-            <label for="last">last name</label>
-            <label for="email">e-mail</label>
-            <label for="password">password</label>
+            <ul class="form-wrapper">
+                <li class="form-row">
+                    <label for="first">First name: </label>
+                    <input type="text" name="first" id="first"required>
+                </li>
+                <li class="form-row">
+                    <label for="last">Last name: </label>
+                    <input type="text" name="last" id="last" required>
+                </li>
+                <li class="form-row">
+                    <label for="email">E-mail: </label>
+                    <input type="email" name="email" id="email" required>
+                </li>
+                <li class="form-row">
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password" required>
+                </li>
+                <li class="button-row">
+                    <button class='btn shadowed' type='reset' id='reset'>Reset</button>
+                    <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+                </li>
+            </ul>
             
-            <input class="form-txt" type="text" name="first" id="first" placeholder="first name" required>
-            <input class="form-txt" type="text" name="last" id="last" placeholder="last name" required>
-            <input class="form-txt" type="email" name="email" id="email" placeholder="jean.doe@example.io" required>
-            <input class="form-txt" type="password" name="password" id="password" placeholder="choose a password" required>
-        
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
         </form>
-
-        <div id="tail"></div>
-        <button form="registration-form" class='btn' type='reset' id='reset'>Reset</button>
-        <button form="registration-form" class='btn' type='submit' id='submit'>Submit</button>
-
     </div>
 </div>
 
