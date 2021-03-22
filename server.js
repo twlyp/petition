@@ -40,6 +40,7 @@ const bc = require("./bc");
 const hb = require("express-handlebars");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+const redis = require("./redis");
 
 // ================================ INIT ================================ //
 const app = (exports.app = express());
@@ -175,6 +176,7 @@ app.route("/petition")
                     return res.redirect("/petition");
                 }
                 req.session.signatureId = querySignature[0].id;
+                redis.del("signatures");
                 return res.redirect("/thanks");
             } catch (e) {
                 next(e);
@@ -185,14 +187,23 @@ app.route("/petition")
 app.route("/signers/:city?").get(
     ifLoggedOut("/registration"),
     ifNotSigned("/petition"),
-    (req, res) =>
-        db.listSignatures(req.params.city).then((result) => {
-            for (let k in result) if (!result[k]) delete result[k];
-            res.render("signers", {
-                rows: result,
+    async function (req, res, next) {
+        try {
+            const cached = await redis.get("signatures");
+            const parsed = JSON.parse(cached) || {};
+            if (cached && parsed.byCity == req.params.city)
+                return res.render("signers", parsed);
+            const signaturesQuery = await db.listSignatures(req.params.city);
+            const parameters = {
+                rows: signaturesQuery,
                 byCity: req.params.city,
-            });
-        })
+            };
+            redis.set("signatures", JSON.stringify(parameters));
+            return res.render("signers", parameters);
+        } catch (e) {
+            next(e);
+        }
+    }
 );
 
 app.route("/thanks").get(
@@ -252,11 +263,9 @@ app.route("/edit")
             destructuredBody[1]
         );
 
-        return Promise.all([
-            updatePassword,
-            updateUserData,
-            updateProfileData,
-        ]).then(() => res.redirect("/signers"));
+        return Promise.all([updatePassword, updateUserData, updateProfileData])
+            .then(() => redis.del("signatures"))
+            .then(() => res.redirect("/signers"));
     });
 
 app.route("/delete/:what").post(ifLoggedOut("/registration"), (req, res) => {
@@ -288,7 +297,7 @@ app.use((err, req, res, next) => {
         return res.redirect("back");
     }
 
-    return res.status(500).send(`${err.name}: ${err.message}`);
+    return res.status(500).send(`${err.name}: ${err.stack}`);
 });
 
 if (require.main == module) {
