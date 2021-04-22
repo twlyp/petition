@@ -1,0 +1,30 @@
+<div class="content-container shadowed">
+    <h3 class="page-title">Signers</h3>
+    {{#if byCity}}
+    <h5 class="subtitle">from {{byCity}}</h5>
+    {{/if}}
+
+    <ol class="signers-list">
+    {{#each rows}}
+        <li>
+        {{#if url}}
+        <a href="{{url}}">{{first}} {{last}}</a>
+        {{else}}
+        {{first}} {{last}}
+        {{/if}}
+        {{#if age}}
+        {{age}}
+        {{/if}}
+        {{#if city}}
+        <a href="/signers/{{city}}">{{city}}</a>
+        {{/if}}
+        </li>
+    {{/each}}
+    </ol>
+
+    <div class="button-row">
+        <div class="btn btn-link shadowed">
+            {{>signatureLink}}
+        </div>
+    </div>
+</div>

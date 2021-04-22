@@ -1,0 +1,16 @@
+<div class="content-container shadowed">
+    <h3 class="page-title">Thank you for signing.</h3>        
+
+    <img class="signature" src="{{{imgData}}}" alt="recorded signature">
+
+    <form action="/delete/signature" method="post" id="delete-signature-form">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="button-row">
+            <button class='btn shadowed' type='submit'>Delete signature</button>
+            <div class="btn btn-link shadowed">
+                <a href="/signers">See all signers</a>
+            </div>
+        </div>
+    </form>
+</div>
+

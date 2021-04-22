@@ -1,0 +1,18 @@
+<nav>
+    {{#if userId }}
+    <p class="greeting">Hello {{userFirst}}, welcome back!</p>
+    {{>signatureLink}}
+    <a href="/signers">See signers</a>
+    <a href="/edit">Edit profile</a>
+    <a href='/logout'>Log out</a>
+    {{else}}
+    <form action="/login" method="post" id="nav-form">
+        <input type="email" name="email" id="nav-email" placeholder=" e-mail" required>
+        <input type="password" name="password" id="nav-password" placeholder=" password" required>
+        <button type="submit" id="nav-login">Log in</button>
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
+    <a href="/registration">Sign up</a>
+    {{/if}}
+</nav>

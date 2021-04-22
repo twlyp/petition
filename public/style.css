@@ -1,0 +1,354 @@
+/* ========== VARIABLES ========== */
+:root {
+    --blue: #161d6f;
+    --turquoise: #98ded9;
+    --light-green: #c7ffd8;
+    --white: #f6f6f6;
+    --contrast: #ed6a5e;
+    --contrast-radial: radial-gradient(#ed6a5e88, #ed6a5e44);
+    --radial-blue-turquoise: radial-gradient(#161d6faa, #98ded9aa);
+
+    --monospace: "Syne Mono", "Courier New", monospace;
+    --sans: Raleway, Helvetica, sans-serif;
+}
+
+/* ========== GENERAL STYLES ========== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--blue);
+    font-family: var(--sans);
+
+    margin: 0;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.frame-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem;
+    position: relative;
+}
+
+h1 {
+    font-size: 8rem;
+}
+
+h2 {
+    font-size: 5rem;
+}
+
+h3 {
+    font-size: 2.5rem;
+}
+
+strong {
+    font-style: bold;
+    color: var(--contrast);
+}
+
+em {
+    font-style: italic;
+}
+
+a {
+    color: var(--contrast);
+}
+
+.shadowed {
+    box-shadow: 8px 8px 5px 1px #111111;
+}
+
+/* ========== BUTTONS ========== */
+
+button {
+    font-family: var(--sans);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.btn {
+    cursor: pointer;
+    font-family: var(--sans);
+    background: var(--light-green);
+    border: 4px solid var(--turquoise);
+    color: var(--blue);
+    font-size: 1.5rem;
+    min-width: 5em;
+    min-height: 2em;
+    border-radius: 2em;
+    margin: 0 1em;
+    padding: 0 1rem;
+    box-shadow: 5px 5px 4px 1px #333;
+    text-align: center;
+}
+
+.btn-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-link a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+/* ========== NAV BAR ========== */
+nav {
+    padding: 10px 2rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: clamp(2rem, 3rem, 10vh);
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background: var(--blue);
+    color: var(--white);
+    z-index: 10;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+nav .greeting {
+    margin: 0 20px;
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0;
+    border-left: 1px solid var(--white);
+    padding: 5px 10px;
+}
+
+nav button {
+    border: none;
+    background: none;
+    color: var(--white);
+    font-weight: bold;
+}
+
+/* ========== ERROR MESSAGE ========== */
+.overlay {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#error-overlay {
+    position: fixed;
+    z-index: 100;
+    background: #333333cc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    border: 4px solid red;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.error-message {
+    font-size: 2rem;
+    margin: 0.5rem;
+    color: darkred;
+}
+
+#error-btn {
+    margin: 1rem;
+    color: darkred;
+    background: none;
+    border: 2px solid red;
+    border-radius: 0;
+}
+
+/* ========== LANDING PAGE ========== */
+.landing-container {
+    align-items: flex-start;
+    color: var(--white);
+}
+
+#banner {
+    background: radial-gradient(rgba(99, 66, 66, 0.6), rgba(33, 66, 66, 0.6));
+}
+
+#banner strong {
+    color: var(--blue);
+    text-shadow: 5px 5px 5px #aaaaaa;
+}
+
+#banner-bkg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.headline {
+    text-shadow: 5px 5px 5px #333333;
+
+    display: block;
+    margin: 20px;
+}
+
+h1.headline {
+    align-self: flex-end;
+    text-align: right;
+}
+
+h3.headline {
+    max-width: 80vw;
+}
+
+.txt-block {
+    max-width: 50vw;
+    margin: 2rem 3rem;
+    font-size: 1.7rem;
+}
+
+#go-sign {
+    position: absolute;
+    font-size: 3rem;
+    border: 7px solid var(--contrast);
+    border-radius: 45%;
+    background: var(--radial-blue-turquoise);
+    width: 200px;
+    height: 300px;
+    right: 10%;
+    top: 70%;
+    transform: rotate(30deg) translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.go-sign-text {
+    transform: rotate(-30deg);
+}
+
+.tail {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-top: 170px solid var(--contrast);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    transform-origin: top center;
+    transform: skew(15deg) translateX(-50%);
+    box-shadow: 8px 8px 5px #111111;
+}
+
+.wiggle {
+    animation: wiggle 1s infinite ease-out;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: skew(15deg) translateX(-50%);
+    }
+    50% {
+        transform: skew(-15deg) translateX(-50%);
+    }
+    100% {
+        transform: skew(15deg) translateX(-50%);
+    }
+}
+
+/* ========== OTHER PAGES ========== */
+
+.content-container {
+    margin-top: 2rem;
+    min-width: min(100vw, 768px);
+    position: relative;
+    background: var(--white);
+    color: var(--blue);
+    border: 5px solid var(--turquoise);
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2rem 2rem 1rem 2rem;
+    font-size: 1.3rem;
+}
+
+.page-title {
+    margin: 10px;
+}
+
+.subtitle {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0.5rem 0 0.5rem;
+    margin-bottom: 0;
+}
+
+.form-row {
+    display: flex;
+    padding: 0.5rem 0;
+    align-items: center;
+}
+
+.form-row * {
+    font-size: 1.5rem;
+    font-family: var(--monospace);
+    margin: 0rem 1rem;
+}
+
+.form-row label {
+    flex: 1;
+}
+
+.form-row input {
+    flex: 2;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.signature {
+    border: 2px dashed var(--turquoise);
+    margin: 2rem 0;
+}
+
+@media screen and (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+}

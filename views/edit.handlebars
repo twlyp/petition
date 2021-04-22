@@ -1,0 +1,48 @@
+<div class="content-container shadowed">
+    <h3 class="page-title">Edit your profile</h3>
+
+    <form action="/edit" method="post" id="data-form">
+    <ul class="form-wrapper">
+        {{#with data}}
+        <li class="form-row">
+            <label for="first">First name: </label>
+            <input value="{{first}}" type="text" name="first" id="first"required>
+        </li>
+        <li class="form-row">
+            <label for="last">Last name: </label>
+            <input value="{{last}}" type="text" name="last" id="last" required>
+        </li>
+        <li class="form-row">
+            <label for="email">E-mail: </label>
+            <input value="{{email}}" type="email" name="email" id="email" required>
+        </li>
+
+        <li class="form-row">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password">
+        </li>
+        <li class="form-row">
+            <label for="age">Age: </label>
+            <input value="{{age}}" type="number" name="age" id="age" min=0 max=140>
+        </li>
+        <li class="form-row">
+            <label for="city">City: </label>
+            <input value="{{city}}" type="text" name="city" id="city">
+        </li>
+        <li class="form-row">
+            <label for="url">Home page: </label>
+            <input value="{{url}}" type="text" name="url" id="url">
+        </li>
+        {{/with}}
+        <li class="button-row">
+            <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+            <div class="btn btn-link shadowed">
+                {{>signatureLink}}
+            </div>
+        </li>
+    </ul>
+
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    </form>
+</div>

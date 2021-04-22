@@ -1,0 +1,31 @@
+<div class="content-container shadowed">
+    <h3 class="page-title">Tell us something more about you!</h3>
+    <h5 class="subtitle">(this step is optional)</h5>
+    <form action="/moreinfo" method="post" id="moreinfo-form">
+        <ul class="form-wrapper">
+            <li class="form-row">
+                <label for="age">Age: </label>
+                <input type="number" name="age" id="age" min=0 max=255>
+            </li>
+            <li class="form-row">
+                <label for="city">City: </label>
+                <input type="text" name="city" id="city">
+            </li>
+            <li class="form-row">
+                <label for="url">Home page: </label>
+                <input type="text" name="url" id="url">
+            </li>
+            <li class="button-row">
+                <button class='btn shadowed' type='reset' id='reset'>Reset</button>
+                <button class='btn shadowed' type='submit' id='submit'>Submit</button>
+                <div class="btn btn-link shadowed">
+                    <a href="/petition">Skip</a>
+                </div>
+            </li>
+        </ul>
+    
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </form>
+
+
+</div>

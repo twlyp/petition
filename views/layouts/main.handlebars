@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400;1,700&family=Syne+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <title>Save the crabs</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    {{#if error}}
+    <div class="overlay" id="error-overlay">
+        <div class="error-container shadowed">
+            <p class="error-message">{{error}}</p>
+            <p class="error-message">Please try again.</p>
+            <form action="/clearerror" method="post">
+                <div class="button-row">
+                    <button type="submit" class="btn shadowed" id="error-btn">Close</button>
+                </div>
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            </form>
+        </div>
+    </div>
+    {{/if}}
+
+    {{>nav}}
+
+    {{{body}}}
+
+</body>
+</html>
